@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: recrawler-service
+spec:
+  selector:
+    app: recrawler
+  ports:
+    - protocol: TCP
+      port: 80

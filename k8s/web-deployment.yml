@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recrawler-deployment
+  labels:
+    app: recrawler
+spec:
+  selector:
+    matchLabels:
+      app: recrawler
+      role: web
+  template:
+    metadata:
+      labels:
+        app: recrawler
+        role: web
+    spec:
+      imagePullSecrets:
+      - name: gitlab-registry
+      containers:
+      - image: registry.gitlab.com/openculinary/recrawler
+        imagePullPolicy: IfNotPresent
+        name: recrawler
+        ports:
+        - containerPort: 80
+  replicas: 1

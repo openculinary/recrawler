@@ -5,6 +5,7 @@ metadata:
 spec:
   selector:
     app: recrawler
+    role: web
   ports:
     - protocol: TCP
       port: 80

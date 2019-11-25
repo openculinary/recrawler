@@ -7,12 +7,12 @@ app = Flask(__name__)
 
 @app.route('/', methods=['POST'])
 def root():
-    products = request.args.getlist('products[]')
-    if not products:
+    include = request.args.getlist('include[]')
+    if not include:
         return abort(400)
 
-    products = ' '.join(products)
-    results = ddg().search(f'{products} recipes')
+    query = ' '.join(include)
+    results = ddg().search(f'{query} recipes')
     urls = [result['url'] for result in results]
 
     session = FuturesSession()

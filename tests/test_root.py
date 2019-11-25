@@ -11,7 +11,7 @@ def test_empty_include(client):
 
 @patch.object(Client, 'search')
 def test_positive_query(mock_search, client):
-    response = client.post('/?include[]=tofu')
+    response = client.post('/', query_string={'include[]': ['tofu']})
 
     assert response.status_code == 200
     mock_search.assert_called_with('tofu recipes')

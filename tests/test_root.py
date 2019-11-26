@@ -28,6 +28,14 @@ def equipment_query():
     }
 
 
+@pytest.fixture
+def offset_query():
+    return {
+        'include[]': ['tofu'],
+        'offset': 10
+    }
+
+
 def test_empty_query(client):
     response = client.post('/')
 
@@ -56,3 +64,10 @@ def test_equipment_query(mock_search, equipment_query, client):
 
     assert response.status_code == 200
     mock_search.assert_called_with('tofu -beef slow cooker recipes')
+
+
+@patch.object(Client, 'search')
+def test_offset_query(mock_search, offset_query, client):
+    response = client.post('/', query_string=offset_query)
+
+    assert response.status_code == 501

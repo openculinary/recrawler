@@ -8,11 +8,18 @@ app = Flask(__name__)
 @app.route('/', methods=['POST'])
 def root():
     include = request.args.getlist('include[]')
+    exclude = request.args.getlist('exclude[]')
+    equipment = request.args.getlist('equipment[]')
+
     if not include:
         return abort(400)
 
     query = ' '.join(include)
-    results = ddg().search(f'{query} recipes')
+    query += ' -'.join([''] + exclude) if exclude else ''
+    query += ' '.join([''] + equipment)
+    query += ' recipes'
+
+    results = ddg().search(query)
     urls = [result['url'] for result in results]
 
     session = FuturesSession()

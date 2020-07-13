@@ -26,7 +26,7 @@ def root():
     query += ' '.join([''] + equipment)
     query += ' recipes'
 
-    results = ddg().search(query)
+    results = ddg(random_ua=False).search(query)
     urls = [result['url'] for result in results]
 
     session = FuturesSession()

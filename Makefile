@@ -19,9 +19,9 @@ image:
 	buildah copy $(container) 'web' 'web'
 	buildah copy $(container) 'Pipfile'
 	buildah run $(container) -- pip install pipenv --
-	buildah run $(container) -- apk add gcc --
+	buildah run $(container) -- apk add gcc musl-dev --
 	buildah run $(container) -- pipenv install --
-	buildah run $(container) -- apk del gcc --
+	buildah run $(container) -- apk del gcc musl-dev --
 	buildah config --port 80 --entrypoint 'pipenv run gunicorn web.app:app --bind :80' $(container)
 	buildah commit --squash --rm $(container) ${IMAGE_NAME}:${IMAGE_TAG}
 

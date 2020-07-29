@@ -20,4 +20,4 @@ spec:
         imagePullPolicy: IfNotPresent
         name: recrawler
         ports:
-        - containerPort: 80
+        - containerPort: 8000

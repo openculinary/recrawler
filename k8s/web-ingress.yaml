@@ -1,4 +1,4 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: recrawler-ingress
@@ -7,6 +7,10 @@ spec:
   - host: recrawler
     http:
       paths:
-      - backend:
-          serviceName: recrawler-service
-          servicePort: 80
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: recrawler-service
+            port:
+              number: 80

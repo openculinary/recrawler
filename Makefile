@@ -29,7 +29,7 @@ image:
 	# End: HACK
 	buildah run $(container) -- apk del gcc musl-dev --
 	buildah config --cmd '/srv/.local/bin/gunicorn web.app:app --bind :8000' --port 8000 --user gunicorn $(container)
-	buildah commit --rm --squash $(container) ${IMAGE_NAME}:${IMAGE_TAG}
+	buildah commit --quiet --rm --squash $(container) ${IMAGE_NAME}:${IMAGE_TAG}
 
 # Virtualenv Makefile pattern derived from https://github.com/bottlepy/bottle/
 venv: venv/.installed requirements.txt requirements-dev.txt

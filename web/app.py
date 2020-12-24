@@ -1,6 +1,6 @@
-from duckpy import Client as ddg
+import duckduckpy
 from flask import Flask, abort, jsonify, request
-from requests_futures.sessions import FuturesSession
+import requests
 
 app = Flask(__name__)
 
@@ -26,14 +26,11 @@ def root():
     query += ' '.join([''] + equipment)
     query += ' recipes'
 
-    results = ddg().search(query)
-    urls = [result['url'] for result in results]
-
-    session = FuturesSession()
+    response = duckduckpy.secure_query(query)
+    urls = [result.first_url for result in response.results]
     for url in urls:
-        session.post(
+        requests.post(
             url='http://api-service/api/recipes/crawl',
             data={'url': url}
         )
-
     return jsonify(urls)

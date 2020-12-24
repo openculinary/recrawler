@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import patch
 
-from duckpy import Client
+import duckduckpy
 
 
 @pytest.fixture
@@ -42,7 +42,7 @@ def test_empty_query(client):
     assert response.status_code == 400
 
 
-@patch.object(Client, 'search')
+@patch.object(duckduckpy, 'secure_query')
 def test_positive_query(mock_search, positive_query, client):
     response = client.post('/', query_string=positive_query)
 
@@ -50,7 +50,7 @@ def test_positive_query(mock_search, positive_query, client):
     mock_search.assert_called_with('tofu recipes')
 
 
-@patch.object(Client, 'search')
+@patch.object(duckduckpy, 'secure_query')
 def test_negative_query(mock_search, negative_query, client):
     response = client.post('/', query_string=negative_query)
 
@@ -58,7 +58,7 @@ def test_negative_query(mock_search, negative_query, client):
     mock_search.assert_called_with('tofu -beef recipes')
 
 
-@patch.object(Client, 'search')
+@patch.object(duckduckpy, 'secure_query')
 def test_equipment_query(mock_search, equipment_query, client):
     response = client.post('/', query_string=equipment_query)
 
@@ -66,7 +66,7 @@ def test_equipment_query(mock_search, equipment_query, client):
     mock_search.assert_called_with('tofu -beef slow cooker recipes')
 
 
-@patch.object(Client, 'search')
+@patch.object(duckduckpy, 'secure_query')
 def test_offset_query(mock_search, offset_query, client):
     response = client.post('/', query_string=offset_query)
 

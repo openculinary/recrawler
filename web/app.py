@@ -1,4 +1,3 @@
-import duckduckpy
 from flask import Flask, abort, jsonify, request
 import requests
 
@@ -26,8 +25,8 @@ def root():
     query += ' '.join([''] + equipment)
     query += ' recipes'
 
-    response = duckduckpy.secure_query(query)
-    urls = [result.first_url for result in response.results]
+    # TODO: Restore recipe recrawling
+    urls = []
     for url in urls:
         requests.post(
             url='http://api-service/api/recipes/crawl',

@@ -1,7 +1,4 @@
 import pytest
-from unittest.mock import patch
-
-import duckduckpy
 
 
 @pytest.fixture
@@ -40,34 +37,3 @@ def test_empty_query(client):
     response = client.post('/')
 
     assert response.status_code == 400
-
-
-@patch.object(duckduckpy, 'secure_query')
-def test_positive_query(mock_search, positive_query, client):
-    response = client.post('/', query_string=positive_query)
-
-    assert response.status_code == 200
-    mock_search.assert_called_with('tofu recipes')
-
-
-@patch.object(duckduckpy, 'secure_query')
-def test_negative_query(mock_search, negative_query, client):
-    response = client.post('/', query_string=negative_query)
-
-    assert response.status_code == 200
-    mock_search.assert_called_with('tofu -beef recipes')
-
-
-@patch.object(duckduckpy, 'secure_query')
-def test_equipment_query(mock_search, equipment_query, client):
-    response = client.post('/', query_string=equipment_query)
-
-    assert response.status_code == 200
-    mock_search.assert_called_with('tofu -beef slow cooker recipes')
-
-
-@patch.object(duckduckpy, 'secure_query')
-def test_offset_query(mock_search, offset_query, client):
-    response = client.post('/', query_string=offset_query)
-
-    assert response.status_code == 501

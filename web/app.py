@@ -4,12 +4,12 @@ import requests
 app = Flask(__name__)
 
 
-@app.route('/', methods=['POST'])
+@app.route("/", methods=["POST"])
 def root():
-    include = request.args.getlist('include[]')
-    exclude = request.args.getlist('exclude[]')
-    equipment = request.args.getlist('equipment[]')
-    offset = request.args.get('offset', type=int, default=0)
+    include = request.args.getlist("include[]")
+    exclude = request.args.getlist("exclude[]")
+    equipment = request.args.getlist("equipment[]")
+    offset = request.args.get("offset", type=int, default=0)
 
     # Ensure we can form a positive query
     if not include and not equipment:
@@ -20,16 +20,13 @@ def root():
         return abort(501)
 
     # Construct a web search query
-    query = ' '.join(include)
-    query += ' -'.join([''] + exclude)
-    query += ' '.join([''] + equipment)
-    query += ' recipes'
+    query = " ".join(include)
+    query += " -".join([""] + exclude)
+    query += " ".join([""] + equipment)
+    query += " recipes"
 
     # TODO: Restore recipe recrawling
     urls = []
     for url in urls:
-        requests.post(
-            url='http://api-service/api/recipes/crawl',
-            data={'url': url}
-        )
+        requests.post(url="http://api-service/api/recipes/crawl", data={"url": url})
     return jsonify(urls)

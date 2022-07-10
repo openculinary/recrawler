@@ -1,5 +1,5 @@
 from flask import Flask, abort, jsonify, request
-import requests
+import httpx
 
 app = Flask(__name__)
 
@@ -28,5 +28,5 @@ def root():
     # TODO: Restore recipe recrawling
     urls = []
     for url in urls:
-        requests.post(url="http://api-service/api/recipes/crawl", data={"url": url})
+        httpx.post(url="http://api-service/api/recipes/crawl", data={"url": url})
     return jsonify(urls)

@@ -19,6 +19,11 @@ def root():
     if offset > 0:
         return abort(501)
 
+    # Forward up to five terms from each of the include, exclude and equipment lists
+    include = include[:5]
+    exclude = exclude[:5]
+    equipment = equipment[:5]
+
     # Construct a web search query
     query = " ".join(include)
     query += " -".join([""] + exclude)

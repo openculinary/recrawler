@@ -50,6 +50,7 @@ def test_negative_query(mock_search, negative_query, client):
     mock_search.assert_called_with("tofu recipes", exclude_words=["beef"])
 
 
+@pytest.mark.skip("equipment validation and web search pending openculinary/backend#79")
 @patch.object(Search, "search")
 def test_equipment_query(mock_search, equipment_query, client):
     response = client.post("/", query_string=equipment_query)

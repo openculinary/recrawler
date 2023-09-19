@@ -1,6 +1,9 @@
+import os
+
 from cachetools import TTLCache
 from flask import Flask, abort, jsonify, request
 import httpx
+from pymojeek import Search
 
 app = Flask(__name__)
 
@@ -29,17 +32,18 @@ def root():
 
     # Construct a web search query
     query = " ".join(include)
-    query += " -".join([""] + exclude)
     query += " ".join([""] + equipment)
     query += " recipes"
 
     # Use an in-process time-limited cache to filter repeat queries
-    if query in query_cache:
+    cache_key = query + " -".join([""] + exclude)
+    if cache_key in query_cache:
         return abort(501)
-    query_cache[query] = True
+    query_cache[cache_key] = True
 
-    # TODO: Restore recipe recrawling
-    urls = []
+    client = Search(api_key=os.environ.get("MOJEEK_API_KEY"))
+    response = client.search(query, exclude_words=exclude)
+    urls = [result.url for result in response.results]
     for url in urls:
         httpx.post(url="http://api-service/api/recipes/crawl", data={"url": url})
     return jsonify(urls)

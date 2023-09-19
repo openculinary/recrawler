@@ -2,3 +2,4 @@ cachetools==5.3.1
 flask==2.3.3
 gunicorn==21.2.0
 httpx==0.24.1
+pymojeek==0.1.1

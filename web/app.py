@@ -42,8 +42,8 @@ def root():
     query_cache[cache_key] = True
 
     client = Search(api_key=os.environ.get("MOJEEK_API_KEY"))
-    response = client.search(query, exclude_words=exclude)
-    urls = [result.url for result in response.results]
+    results = client.search(query, exclude_words=exclude)
+    urls = [result.url for result in results]
     for url in urls:
         httpx.post(url="http://api-service/api/recipes/crawl", data={"url": url})
     return jsonify(urls)

@@ -41,7 +41,7 @@ def root():
         return abort(501)
     query_cache[cache_key] = True
 
-    client = Search(api_key=os.environ.get("MOJEEK_API_KEY"))
+    client = Search(api_key=os.environ.get("MOJEEK_API_KEY"), safe_search=True)
     results = client.search(query, exclude_words=exclude)
     urls = [result.url for result in results]
     for url in urls:

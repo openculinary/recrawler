@@ -45,5 +45,5 @@ def root():
     results = client.search(query, exclude_words=exclude)
     urls = [result.url for result in results]
     for url in urls:
-        httpx.post(url="http://api-service/api/recipes/crawl", data={"url": url})
+        httpx.post(url="http://backend-service/recipes/crawl", data={"url": url})
     return jsonify(urls)

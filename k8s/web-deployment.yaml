@@ -21,3 +21,9 @@ spec:
         name: recrawler
         ports:
         - containerPort: 8000
+        env:
+          - name: MOJEEK_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: recrawler-client-credentials
+                key: mojeek-api-key

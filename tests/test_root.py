@@ -64,3 +64,13 @@ def test_offset_query(mock_search, offset_query, client):
     response = client.post("/", query_string=offset_query)
 
     assert response.status_code == 501
+
+
+@patch.dict("os.environ", {"RECRAWLS_PER_MILLE": "500"})
+@patch.object(Search, "search")
+def test_recrawl_sampling(mock_search, positive_query, client):
+    query = {"include[]": ["arbitrarilychosen"]}
+    response = client.post("/", query_string=query)
+
+    assert response.status_code == 400
+    mock_search.assert_not_called()

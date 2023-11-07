@@ -2,6 +2,7 @@ import os
 
 from cachetools import TTLCache
 from flask import Flask, abort, jsonify, request
+from hashlib import sha512 as Hasher
 import httpx
 from pymojeek import Search
 
@@ -23,6 +24,22 @@ def root():
     exclude = exclude[:5]
     equipment = equipment[:0]
 
+    # Construct a web search query
+    query = " ".join(include)
+    query += " ".join([""] + equipment)
+    query += " recipes"
+
+    # Drop an environment-configurable percentage of requests
+    try:
+        threshold = int(os.environ.get("RECRAWLS_PER_MILLE"))
+    except Exception:
+        threshold = 1000
+
+    digest = Hasher()
+    digest.update(query.encode("utf-8"))
+    if int(digest.hexdigest(), 16) % 1000 >= threshold:
+        return abort(400)
+
     # Ensure we can form a positive query
     if not include and not equipment:
         return abort(400)
@@ -30,11 +47,6 @@ def root():
     # Ignore pagination for now
     if offset > 0:
         return abort(501)
-
-    # Construct a web search query
-    query = " ".join(include)
-    query += " ".join([""] + equipment)
-    query += " recipes"
 
     # Use an in-process time-limited cache to filter repeat queries
     cache_key = query + " -".join([""] + exclude)

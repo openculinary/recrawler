@@ -27,3 +27,5 @@ spec:
               secretKeyRef:
                 name: recrawler-client-credentials
                 key: mojeek-api-key
+          - name: RECRAWLS_PER_MILLE
+            value: 200

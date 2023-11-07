@@ -28,4 +28,4 @@ spec:
                 name: recrawler-client-credentials
                 key: mojeek-api-key
           - name: RECRAWLS_PER_MILLE
-            value: 200
+            value: '200'

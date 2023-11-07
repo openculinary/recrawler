@@ -25,7 +25,8 @@ def root():
     if offset > 0:
         return abort(501)
 
-    # Forward up to five terms from each of the include, exclude and equipment lists
+    # Forward up to five terms from each of the include and exclude lists;
+    # equipment terms are ignored currently, to increase the cache hit ratio
     include = include[:5]
     exclude = exclude[:5]
     equipment = equipment[:0]

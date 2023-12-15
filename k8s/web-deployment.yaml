@@ -29,3 +29,13 @@ spec:
                 key: mojeek-api-key
           - name: RECRAWLS_PER_MILLE
             value: '100'
+        securityContext:
+          readOnlyRootFilesystem: true
+        volumeMounts:
+        - mountPath: /var/tmp
+          name: var-tmp
+      volumes:
+      - name: var-tmp
+        emptyDir:
+          medium: "Memory"
+          sizeLimit: "128Mi"

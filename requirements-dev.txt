@@ -204,8 +204,8 @@ pyflakes==3.2.0 \
     --hash=sha256:1c61603ff154621fb2a9172037d84dca3500def8c8b630657d1701f026f8af3f \
     --hash=sha256:84b5be138a2dfbb40689ca07e2152deb896a65c3a3e24c251c5c62489568074a
     # via flake8
-pymojeek==0.1.2 \
-    --hash=sha256:2be6edfcf4da263c735f1b68faf01fd51e554acf4dfe6927867dd7f5dfd16b71
+pymojeek==0.2.0 \
+    --hash=sha256:4201a993994c708ae39ba057663989cce310663dc7cfadb1390c1a901cc45b5e
     # via -r requirements.txt
 pytest==8.3.2 \
     --hash=sha256:4ba08f9ae7dcf84ded419494d229b48d0903ea6407b030eaec46df5e6a73bba5 \

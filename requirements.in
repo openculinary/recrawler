@@ -1,5 +1,5 @@
 cachetools==5.5.0
 flask==3.1.0
 gunicorn==23.0.0
-httpx==0.27.2
+httpx==0.28.1
 pymojeek==0.2.0
